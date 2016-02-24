@@ -77,7 +77,7 @@ app.post('/store', function(req, res) {
                   "response_type": "in_channel",
                   'attachments': [
                       {
-                          "text":"by " + req.user
+                          "text":"by " + req.body.user
                       }
                   ]
               }
