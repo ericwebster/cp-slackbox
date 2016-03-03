@@ -43,6 +43,35 @@ app.get('/callback', function(req, res) {
     });
 });
 
+app.post('/search', function(req, res) {
+  spotifyApi.refreshAccessToken()
+    .then(function(data) {
+      spotifyApi.setAccessToken(data.body['access_token']);
+      if (data.body['refresh_token']) {
+        spotifyApi.setRefreshToken(data.body['refresh_token']);
+      }
+      if(req.body.text.indexOf(' - ') === -1) {
+        var query = 'track:' + req.body.text;
+      } else {
+        var pieces = req.body.text.split(' - ');
+        var query = 'artist:' + pieces[0].trim() + ' track:' + pieces[1].trim();
+      }
+      spotifyApi.searchTracks(query)
+        .then(function(data) {
+          var results = data.body.tracks.items;
+          if (results.length === 0) {
+            return res.send('Could not find that track.');
+          }
+          return res.send(JSON.stringify(results));
+          });
+          
+        }, function(err) {
+          return res.send(err.message);
+        });
+    }, function(err) {
+      return res.send('Could not refresh access token. You probably need to re-authorise yourself from your app\'s homepage.');
+    });
+});
 app.use('/store', function(req, res, next) {
   if (req.body.token !== process.env.SLACK_TOKEN) {
     return res.status(500).send('Cross site request forgerizzle!');
