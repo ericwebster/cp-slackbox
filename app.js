@@ -62,9 +62,8 @@ app.post('/search', function(req, res) {
           if (results.length === 0) {
             return res.send('Could not find that track.');
           }
-          return res.send(JSON.stringify(results));
-          });
-          
+          return res.send(results);
+
         }, function(err) {
           return res.send(err.message);
         });
