@@ -93,8 +93,8 @@ app.post('/search', function(req, res) {
           }
           var tracks = results;
           var tracklist = [];
-          tracks.forEach(track){
-              tracklist.push("# artist: " + track.artists[0].name + " name: " + track.name + " id: \n")
+          for (var track in tracks){
+              tracklist.push("artist: " + track.artists[0].name + " name: " + track.name + " id: \n");
           }
           return res.send(tracklist.join(""));
 
