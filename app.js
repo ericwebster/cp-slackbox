@@ -92,9 +92,9 @@ app.post('/search', function(req, res) {
             return res.send('Could not find that track.');
           }
           var tracks = results;
-          var tracklist = [];
+          var tracklist = ["# Track list \n"];
           for (var track in tracks){
-              tracklist.push("artist: " + track.artists[0].name + " name: " + track.name + " id: \n");
+              tracklist.push("# artist: " + track.artists[0].name + " name: " + track.name + " id: \n");
           }
           return res.send(tracklist.join(""));
 
