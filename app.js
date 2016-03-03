@@ -94,7 +94,7 @@ app.post('/search', function(req, res) {
           var tracks = results;
           var tracklist = [];
           for each (var track in tracks){
-              tracklist.push("artist: " + track.artists[0].name + " name: " + track.name + " id: \n")
+              tracklist.push("# artist: " + track.artists[0].name + " name: " + track.name + " id: \n")
           }
           return res.send(tracklist.join(""));
 
