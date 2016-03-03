@@ -43,35 +43,6 @@ app.get('/callback', function(req, res) {
     });
 });
 
-// app.post('/search', function(req, res) {
-//   spotifyApi.refreshAccessToken()
-//     .then(function(data) {
-//       spotifyApi.setAccessToken(data.body['access_token']);
-//       if (data.body['refresh_token']) {
-//         spotifyApi.setRefreshToken(data.body['refresh_token']);
-//       }
-//       if(req.body.text.indexOf(' - ') === -1) {
-//         var query = 'track:' + req.body.text;
-//       } else {
-//         var pieces = req.body.text.split(' - ');
-//         var query = 'artist:' + pieces[0].trim() + ' track:' + pieces[1].trim();
-//       }
-//       spotifyApi.searchTracks(query)
-//         .then(function(data) {
-//           var results = data.body.tracks.items;
-//           if (results.length === 0) {
-//             return res.send('Could not find that track.');
-//           }
-//           return res.send(results);
-//
-//         }, function(err) {
-//           return res.send(err.message);
-//         });
-//     }, function(err) {
-//       return res.send('Could not refresh access token. You probably need to re-authorise yourself from your app\'s homepage.');
-//     });
-// });
-
 app.post('/search', function(req, res) {
   spotifyApi.refreshAccessToken()
     .then(function(data) {
@@ -92,10 +63,10 @@ app.post('/search', function(req, res) {
             return res.send('Could not find that track.');
           }
           var tracks = results;
-          var tracklist = ["# Track list \n"];
-          // for (var track in tracks){
-          //     tracklist.push("# artist: " + track.artists[0].name + " name: " + track.name + " id: \n");
-          // }
+          var tracklist = ["Track Search Result: \n"];
+          for (i = 0; i < 5; i++){
+              tracklist.push("# Artist: " + tracks[i].artists[0].name + " name: " + tracks[i].name + " id: "+ tracks[i].id  +" \n");
+          }
           return res.send(tracklist.join(""));
 
         }, function(err) {
