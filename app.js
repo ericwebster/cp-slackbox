@@ -63,16 +63,11 @@ app.post('/search', function(req, res) {
             return res.send('Could not find that track.');
           }
           var tracks = results;
-          var tracklist = ["Spotify Track Search Result: \n"];
+          var tracklist = ["Spotify Track Search Result:"];
           for (i = 0; i < 5; i++){
-              tracklist.push("• " + tracks[i].artists[0].name + " - " + tracks[i].name + " (*"+ tracks[i].id  +"*) \n");
+              tracklist.push(i + ".) " + tracks[i].artists[0].name + " - " + tracks[i].name + " [*"+ tracks[i].id  +"*]");
           }
-          var response = {
-              "text": tracklist.join(""),
-              "response_type": "in_channel",
-              "mrkdwn": true
-          }
-          return res.send();
+          return res.send(tracklist.join("\n"));
 
         }, function(err) {
           return res.send(err.message);
