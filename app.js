@@ -92,7 +92,7 @@ app.post('/search', function(req, res) {
             return res.send('Could not find that track.');
           }
           var track = results;
-          return res.send("tracks were found");
+          return res.send(JSON.stringify(results));
 
         }, function(err) {
           return res.send(err.message);
